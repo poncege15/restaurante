@@ -1,88 +1,23 @@
+let contenedorPersonajes = document.getElementById("personajes");
 
-// let personaje1= {
-//     nombre:"batman",
-//     superPoder: "billetera",
-//     edad: 45,
-//     volar: false
-// }
+fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        const randomMeal = data.meals[0]; // Accede al primer elemento del array "meals"
+        const contenedorCreado = document.createElement('div');
 
-// let personaje2= {
-//     nombre:"batman",
-//     superPoder: "billetera",
-//     edad: 45,
-//     volar: false
-// }
-
-
-// let personaje3= {
-//     nombre:"batman",
-//     superPoder: "billetera",
-//     edad: 45,
-//     volar: false
-// }
-
-// let personajes = [
-
-//     {
-//         id: 1,
-//         nombre:"batman",
-//         superPoder: "billetera",
-//         edad: 45,
-//         volar: false
-//     },
-//     {
-//         id: 2,
-//         nombre:"aquaman",
-//         superPoder: "hablarPeces",
-//         edad: 45,
-//         volar: false
-//     },
-//     {
-//         id: 3,
-//         nombre:"linternaVerde",
-//         superPoder: "anillo",
-//         edad: 45,
-//         volar: true
-//     }
-
-// ]
-
-// for(let i=0;i<personajes.length;i++){
-
-//     console.log(personajes[i].nombre)
-//     console.log(personajes[i].superPoder)
-
-// }
-
-// console.log("****Llamdo mediante foreach objeto***")
-
-// personajes.forEach((objeto)=>console.log(objeto.nombre))
-
-
-
-
-
-
-let contenedorPersonajes = document.getElementById('personajes')
-
-fetch('https://rickandmortyapi.com/api/character')
-.then((response)=> response.json())
-.then((data)=>{
-
-    console.log(data)
-    // console.log(data.results)
-    
-
-    data.results.map((elemento)=>{
-
-        const contenedorCreado = document.createElement("div")
-        
         contenedorCreado.innerHTML = `
-        <h4>${elemento.name}</h4>
-        <img src="${elemento.image}">
+            <h1>${randomMeal.strMeal}</h1>
+            <h4>${randomMeal.strCategory}</h4>
+            <h4>${randomMeal.strArea}</h4>
+            <img src="${randomMeal.strMealThumb}">
+            <h6>${randomMeal.strInstructions}</h6>
+            
         `;
 
-        contenedorPersonajes.append(contenedorCreado)
+        contenedorPersonajes.appendChild(contenedorCreado);
     })
-
-})
+    .catch((error) => {
+        console.error('Error al obtener datos:', error);
+    });
